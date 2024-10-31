@@ -72,9 +72,15 @@
                 return 'Die Eingabe darf nicht mehr als 3 Sonderzeichen enthalten.';
             }
 
-            for (let i = 0; i < input.length - 1; i++) {
-                if (specialCharPattern.test(input[i]) && specialCharPattern.test(input[i + 1])) {
-                    return 'Sonderzeichen dürfen nicht aufeinander folgen.';
+            let consecutiveSpecialCount = 0;
+            for (let i = 0; i < input.length; i++) {
+                if (specialCharPattern.test(input[i])) {
+                    consecutiveSpecialCount++;
+                    if (consecutiveSpecialCount > 1) {
+                        return 'Sonderzeichen dürfen nicht aufeinander folgen.';
+                    }
+                } else {
+                    consecutiveSpecialCount = 0;
                 }
             }
 
