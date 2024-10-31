@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label, input, button {
+            margin: 10px 0;
+        }
+
+        #validationResult {
+            margin-top: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello World Web-App</h1>
+        <form id="inputForm">
+            <label for="textbox">Eingabe:</label>
+            <input type="text" id="textbox" name="textbox" required>
+            <button type="submit">Senden</button>
+        </form>
+        <p id="validationResult"></p>
+    </div>
+    <script>
+        document.getElementById('inputForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const input = document.getElementById('textbox').value;
+            const validationResult = validateInput(input);
+            document.getElementById('validationResult').innerText = validationResult;
+        });
+
+        function validateInput(input) {
+            if (input.length < 8) {
+                return 'Die Eingabe muss mindestens 8 Zeichen lang sein.';
+            }
+
+            const specialCharPattern = /[!@#\$%\^\&*\)\(+=._-]/g;
+            const specialChars = input.match(specialCharPattern);
+            if (!specialChars || specialChars.length < 1) {
+                return 'Die Eingabe muss mindestens 1 Sonderzeichen enthalten.';
+            }
+
+            if (specialChars.length > 3) {
+                return 'Die Eingabe darf nicht mehr als 3 Sonderzeichen enthalten.';
+            }
+
+            for (let i = 0; i < input.length - 1; i++) {
+                if (specialCharPattern.test(input[i]) && specialCharPattern.test(input[i + 1])) {
+                    return 'Sonderzeichen dürfen nicht aufeinander folgen.';
+                }
+            }
+
+            return 'Eingabe ist gültig!';
+        }
+    </script>
+</body>
+</html>
