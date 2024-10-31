@@ -58,34 +58,28 @@
         });
 
         function validateInput(input) {
-            if (input.length < 8) {
-                return 'Die Eingabe muss mindestens 8 Zeichen lang sein.';
-            }
+    if (input.length < 8) {
+        return 'Die Eingabe muss mindestens 8 Zeichen lang sein.';
+    }
 
-            const specialCharPattern = /[!@#\$%\^\&*\)\(+=._-]/g;
-            const specialChars = input.match(specialCharPattern);
-            if (!specialChars || specialChars.length < 1) {
-                return 'Die Eingabe muss mindestens 1 Sonderzeichen enthalten.';
-            }
+    const specialCharPattern = /[!@#\$%\^\&*\)\(+=._-]/g;
+    const specialChars = input.match(specialCharPattern);
+    if (!specialChars || specialChars.length < 1) {
+        return 'Die Eingabe muss mindestens 1 Sonderzeichen enthalten.';
+    }
 
-            if (specialChars.length > 3) {
-                return 'Die Eingabe darf nicht mehr als 3 Sonderzeichen enthalten.';
-            }
+    if (specialChars.length > 3) {
+        return 'Die Eingabe darf nicht mehr als 3 Sonderzeichen enthalten.';
+    }
 
-            let consecutiveSpecialCount = 0;
-            for (let i = 0; i < input.length; i++) {
-                if (specialCharPattern.test(input[i])) {
-                    consecutiveSpecialCount++;
-                    if (consecutiveSpecialCount > 1) {
-                        return 'Sonderzeichen dürfen nicht aufeinander folgen.';
-                    }
-                } else {
-                    consecutiveSpecialCount = 0;
-                }
-            }
-
-            return 'Eingabe ist gültig!';
+    for (let i = 0; i < input.length - 1; i++) {
+        if (specialCharPattern.test(input[i]) && specialCharPattern.test(input[i + 1])) {
+            return 'Sonderzeichen dürfen nicht aufeinander folgen.';
         }
+    }
+
+    return 'Eingabe ist gültig!';
+}
     </script>
 </body>
 </html>
